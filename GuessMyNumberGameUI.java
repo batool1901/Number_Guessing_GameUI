@@ -77,14 +77,14 @@ public class GuessMyNumberGameUI extends JFrame implements ActionListener {
 
         guessButton = new JButton("GUESS");
         guessButton.setFont(new Font("Arial", Font.BOLD, 32));
-        guessButton.setBackground(new Color(175, 0, 143)); // Brighter magenta
+        guessButton.setBackground(new Color(175, 0, 143));
         guessButton.setForeground(Color.WHITE);
         guessButton.setFocusPainted(false);
         guessButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         guessButton.addActionListener(this);
         addComponent(contentPanel, guessButton, gbc, 6);
 
-        JLabel footerLabel = new JLabel("MADE BY G1.CORP", SwingConstants.CENTER);
+        JLabel footerLabel = new JLabel("MADE BY Batool F.", SwingConstants.CENTER);
         footerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         footerLabel.setForeground(Color.WHITE);
         gbc.weighty = 1.0;
@@ -186,9 +186,53 @@ public class GuessMyNumberGameUI extends JFrame implements ActionListener {
         });
 
         exitBtn.addActionListener(evt -> {
-            JOptionPane.showMessageDialog(this, "🏁 Final Score: " + score + "\nThanks for playing!", "Game Over",
-                    JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            JFrame gameOverPopup = new JFrame("🎮 Game Over");
+            gameOverPopup.setSize(500, 350);
+            gameOverPopup.setLocationRelativeTo(this);
+            gameOverPopup.setLayout(new BorderLayout());
+            gameOverPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JPanel exitPanel = new JPanel(); // Renamed to avoid conflict
+            exitPanel.setBackground(new Color(36, 37, 130));
+            exitPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+            exitPanel.setLayout(new BoxLayout(exitPanel, BoxLayout.Y_AXIS));
+
+            JLabel title = new JLabel("🏁 GAME OVER!", SwingConstants.CENTER);
+            title.setFont(new Font("Comic Sans MS", Font.BOLD, 34));
+            title.setForeground(new Color(255, 204, 0));
+            title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JLabel finalScoreLabel = new JLabel("Your Final Score: " + score, SwingConstants.CENTER);
+            finalScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+            finalScoreLabel.setForeground(Color.WHITE);
+            finalScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JLabel thankYouLabel = new JLabel("🎉 Thanks for playing! 🎉", SwingConstants.CENTER);
+            thankYouLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+            thankYouLabel.setForeground(Color.LIGHT_GRAY);
+            thankYouLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton closeBtn = new JButton("Exit");
+            closeBtn.setFont(new Font("Arial", Font.BOLD, 20));
+            closeBtn.setBackground(new Color(192, 57, 43));
+            closeBtn.setForeground(Color.WHITE);
+            closeBtn.setFocusPainted(false);
+            closeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+            closeBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            closeBtn.setMaximumSize(new Dimension(120, 40));
+
+            closeBtn.addActionListener(e -> System.exit(0));
+
+            exitPanel.add(title);
+            exitPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+            exitPanel.add(finalScoreLabel);
+            exitPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            exitPanel.add(thankYouLabel);
+            exitPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+            exitPanel.add(closeBtn);
+
+            gameOverPopup.add(exitPanel, BorderLayout.CENTER);
+            gameOverPopup.setVisible(true);
         });
 
         buttonPanel.add(nextRoundBtn);
